@@ -8,8 +8,11 @@ public class CharacterMovement : MonoBehaviour
     public Transform swimPos;
     public Animator anim;
 
+    [SerializeField] private GameObject _circle;
+
     void Start()
     {
+        _circle.SetActive(false);
         this.gameObject.transform.DOMove(fallPos.position, 2f).OnComplete(() =>
         {
             // Belirli bir süre sonra ikinci hedefe hareket
@@ -17,6 +20,7 @@ public class CharacterMovement : MonoBehaviour
             {
                 this.gameObject.transform.DOMove(swimPos.position, 2f);
                 anim.SetBool("isSwim", true);
+                _circle.SetActive(true);
             });
         });
     }
@@ -26,12 +30,7 @@ public class CharacterMovement : MonoBehaviour
     {
 
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("sea"))
-        {
-            
-        }
     }
-}
+
+
+
