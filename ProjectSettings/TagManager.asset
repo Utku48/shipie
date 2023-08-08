@@ -6,6 +6,7 @@ TagManager:
   tags:
   - sea
   - border
+  - circle
   layers:
   - Default
   - TransparentFX
