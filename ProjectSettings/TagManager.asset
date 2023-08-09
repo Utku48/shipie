@@ -7,6 +7,8 @@ TagManager:
   - sea
   - border
   - circle
+  - poolStart
+  - poolEnd
   layers:
   - Default
   - TransparentFX

@@ -150,27 +150,27 @@ Material:
     - _DepthHorizontal: 1
     - _DepthMode: 0
     - _DepthTexture: 1
-    - _DepthVertical: 8
+    - _DepthVertical: 6.3
     - _DisableDepthTexture: 0
     - _DistanceNormalsOn: 1
     - _DistanceNormalsTiling: 0.25
     - _DstBlend: 0
-    - _EdgeFade: 18.7
+    - _EdgeFade: 145.4
     - _EnvironmentReflections: 1
     - _EnvironmentReflectionsOn: 1
     - _FlatShadingOn: 0
     - _FlowSpeed: 1
-    - _FoamBaseAmount: 0.297
+    - _FoamBaseAmount: 0.185
     - _FoamClipping: 0
     - _FoamDistortion: 1
     - _FoamOn: 1
     - _FoamOpacity: 0
     - _FoamSize: 0.606
-    - _FoamSpeed: 0.06000001
+    - _FoamSpeed: 0.09
     - _FoamSubSpeed: -0.25
     - _FoamSubTiling: 0.5
     - _FoamTiling: 0.09999993
-    - _FoamWaveAmount: 0
+    - _FoamWaveAmount: 0.81
     - _FoamWaveMask: 0
     - _FoamWaveMaskExp: 1
     - _GlossMapScale: 0
@@ -196,7 +196,7 @@ Material:
     - _NormalMap: 1
     - _NormalMapOn: 1
     - _NormalSpeed: 0.2
-    - _NormalStrength: 0.202
+    - _NormalStrength: 0.217
     - _NormalSubSpeed: -0.5
     - _NormalSubTiling: 0.5
     - _NormalTiling: -0.48000008
@@ -263,8 +263,8 @@ Material:
     - _WaveCount: 2
     - _WaveDistance: 0.775
     - _WaveHeight: 0.1
-    - _WaveNormalStr: 0.1
-    - _WaveSpeed: 2.3999996
+    - _WaveNormalStr: 0.8
+    - _WaveSpeed: 2.3699996
     - _WaveSteepness: 0
     - _WaveTint: 0
     - _WavesOn: 1
@@ -273,14 +273,14 @@ Material:
     - _ZClip: 1
     - _ZWrite: 0
     m_Colors:
-    - _BaseColor: {r: 0, g: 0.16451614, b: 0.34, a: 0.9647059}
+    - _BaseColor: {r: 0, g: 0.16451614, b: 0.34, a: 0.7647059}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _DepthMapBounds: {r: -402.3, g: -459.43, b: 0.0012693577, a: 0}
     - _Direction: {r: 1, g: 1, b: 0, a: 0}
     - _DistanceNormalsFadeDist: {r: 0, g: 80, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 0.92941177}
-    - _HorizonColor: {r: 0.68, g: 1, b: 0.99, a: 0.15}
+    - _HorizonColor: {r: 0.68, g: 1, b: 0.99, a: 0.1764706}
     - _IntersectionColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _ShallowColor: {r: 0, g: 1, b: 0.98136926, a: 0.3764706}

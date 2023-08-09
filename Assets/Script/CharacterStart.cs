@@ -9,11 +9,15 @@ public class CharacterStart : MonoBehaviour
 {
     public static CharacterStart Instance { get; private set; }
 
-    public Transform fallPos;
-    public Transform swimPos;
-    public Animator anim;
+    [SerializeField] private Transform _fallPos;
+    [SerializeField] private Transform _swimPos;
+    [SerializeField] private Animator _anim;
 
     [SerializeField] private GameObject _circle;
+    [SerializeField] private ParticleSystem _splash;
+
+    [SerializeField] private AudioSource _source;
+  
 
     public bool swim = false;
     private void Awake()
@@ -29,13 +33,13 @@ public class CharacterStart : MonoBehaviour
         }
 
         _circle.SetActive(false);
-        this.gameObject.transform.DOMove(fallPos.position, 2f).OnComplete(() =>
+        this.gameObject.transform.DOMove(_fallPos.position, 2f).OnComplete(() =>
         {
             // Belirli bir süre sonra ikinci hedefe hareket
             DOVirtual.DelayedCall(1f, () =>
             {
-                this.gameObject.transform.DOMove(swimPos.position, 2f);
-                anim.SetBool("isSwim", true);
+                this.gameObject.transform.DOMove(_swimPos.position, 2f);
+                _anim.SetBool("isSwim", true);
                 _circle.SetActive(true);
                 swim = true;
 
@@ -43,7 +47,21 @@ public class CharacterStart : MonoBehaviour
         });
 
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("sea"))
+        {
+            StartCoroutine(StartParticule());
+        }
+    }
 
+    IEnumerator StartParticule()
+    {
+        yield return new WaitForSeconds(0.3f);
+        _splash.Play();
+        _source.Play();
+
+    }
 
 }
 

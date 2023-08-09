@@ -10,24 +10,19 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] private float speed;
 
 
-    void Start()
-    {
-
-
-    }
-
-
     void FixedUpdate()
     {
         if (CharacterStart.Instance.swim)
         {
             Vector3 a = transform.position;
             Vector3 b = _targetPos.position;
+            b.y = transform.position.y;
 
             transform.position = Vector3.MoveTowards(a, b, speed);
-            transform.DOLookAt(_targetPos.position, 1f)
+            transform.DOLookAt(b, 1f)
              .SetEase(Ease.Linear);
         }
 
     }
+
 }
