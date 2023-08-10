@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -7,12 +8,19 @@ public class ObjectsinPool : MonoBehaviour
 {
     public static ObjectsinPool Instance { get; private set; }
 
-    public Queue<GameObject> objs1 = new Queue<GameObject>();
-    [SerializeField] Transform startPos;
+    [SerializeField] private float spawnInterval = 1; //Ne kadar sıklıkla spawn edecegiz
+
+    [SerializeField] private ObjectPooling objectPool = null;
+
+    public Transform[] PrefabSpawnPos;
 
 
+
+    int counter = 0;
     private void Awake()
     {
+        // If there is an instance, and it's not me, delete myself.
+
         if (Instance != null && Instance != this)
         {
             Destroy(this);
@@ -22,21 +30,31 @@ public class ObjectsinPool : MonoBehaviour
             Instance = this;
         }
     }
-    private void Update()
+    void Start()
     {
-        for (int i = 0; i < objs1.Count; i++)
+
+        StartCoroutine(SpawnObjectsWithDelay());
+
+    }
+
+    IEnumerator SpawnObjectsWithDelay()
+    {
+        for (int i = 0; i < objectPool.prefabsInPool.Count; i++)
         {
-            GameObject obj1 = ObjectPooling.Instance.GetPoolObject(0);//ilk havuzdan obje çekiyoruz
-            obj1.transform.position = startPos.position;
-            objs1.Enqueue(obj1);//Kuyruga geri ekledik
+            GameObject obj = objectPool.GetPooledObject(counter++ % 2); // ObjectPool scriptinden GetPooledObject'i çağır
+
+            int randomIndex = Random.Range(0, PrefabSpawnPos.Length);
+            Vector3 spawnPosition = new Vector3(PrefabSpawnPos[randomIndex].position.x, 0.35f, PrefabSpawnPos[randomIndex].position.z);
+
+            // Eğer PrefabSpawnPos'da obj varsa 1 saniye bekle
+            if (PrefabSpawnPos[randomIndex].gameObject == obj)
+            {
+
+            }
+
+            obj.transform.position = spawnPosition;
+            yield return new WaitForSeconds(1.5f);
         }
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("poolEnd"))
-        {
-            GameObject obj1 = objs1.Dequeue();//Dequeue() metodu, Queue'dan en üstteki (ilk eklenen) elemanı çıkarır.
-            ObjectPooling.Instance.SetPoolObject(obj1, 0);
-        }
-    }
+
 }

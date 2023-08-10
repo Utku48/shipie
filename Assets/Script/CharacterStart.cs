@@ -57,7 +57,7 @@ public class CharacterStart : MonoBehaviour
 
     IEnumerator StartParticule()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.5f);
         _splash.Play();
         _source.Play();
 

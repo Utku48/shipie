@@ -1,82 +1,62 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class ObjectPooling : MonoBehaviour
 {
-    public static ObjectPooling Instance { get; private set; }
+    public List<GameObject> prefabsInPool = new List<GameObject>();
 
     [Serializable]
     public struct Pool
     {
-        public Queue<GameObject> PooledObject;
+        public Queue<GameObject> pooledObjects;  //Objelerin sırası
         public GameObject objectPrefab;
-        public int poolSize;
+        public int poolCount; //Havuzda saklanacak obje sayisi
     }
 
-    [SerializeField] public Pool[] pools = null;
+    [SerializeField] private Pool[] pools = null;
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
 
-
-        for (int i = 0; i < pools.Length; i++) //Havuz çin
+        //pools[j] j kaç ise  o pool için sıradan çeker veya sıraya ekler??
+        for (int j = 0; j < pools.Length; j++)
         {
-            pools[i].PooledObject = new Queue<GameObject>();
+            pools[j].pooledObjects = new Queue<GameObject>(); //Sırayı olusturduk
 
-            for (int j = 0; j < pools[i].poolSize; j++) //Havuz içindeki objeler için
+            for (int i = 0; i < pools[j].poolCount; i++)
             {
-                GameObject obj = Instantiate(pools[i].objectPrefab);
+                GameObject obj = Instantiate(pools[j].objectPrefab);
                 obj.SetActive(false);
-                pools[i].PooledObject.Enqueue(obj);
+
+                pools[j].pooledObjects.Enqueue(obj);//obj'yi Enqueue ile sıraya soktuk
+                prefabsInPool.Add(obj);
             }
         }
-    }
 
-    //Aşağıdaki kodlarda kullanmış oldugumuz ObjectType'larımız aslında hangi havuzdan obje çekeceğimizi söyler
 
-    public GameObject GetPoolObject(int ObjectType)
-    {
-        if (ObjectType >= pools.Length)
-            return null;
-
-        if (pools[ObjectType].PooledObject.Count == 0)
-            AddSizePool(5f, ObjectType);
-
-        GameObject obj = pools[ObjectType].PooledObject.Dequeue();
-        obj.SetActive(true);
-        return obj;
 
     }
-    public void SetPoolObject(GameObject pooledObject, int ObjectType)
-    {
-        if (ObjectType >= pools.Length)
-            return;
-        pools[ObjectType].PooledObject.Enqueue(pooledObject);
-        pooledObject.SetActive(false);
-    }
 
-    //Belirlenen sayıdan fazla objeye ihtiyaç duyulursa
-    public void AddSizePool(float amount, int ObjectType)
+    public GameObject GetPooledObject(int objectType)
     {
-        for (int i = 0; i < amount; i++)
+        if (objectType >= pools.Length)
         {
-            GameObject obj = Instantiate(pools[ObjectType].objectPrefab);
-            obj.SetActive(false);
-
-            pools[ObjectType].PooledObject.Enqueue(obj);
+            return null;
         }
+
+
+        GameObject obj = pools[objectType].pooledObjects.Dequeue(); //Sıranın basındaki elemani al ve çagır
+
+        obj.SetActive(true);
+
+        pools[objectType].pooledObjects.Enqueue(obj);//Sıranın basındaki objeyi aldıktan sonra tekrar sıraya soktuk
+  
+
+
+        return obj;
     }
 
 }
