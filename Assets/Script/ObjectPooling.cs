@@ -2,10 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ObjectPooling : MonoBehaviour
 {
+    public static ObjectPooling Instance { get; private set; }
+
     public List<GameObject> prefabsInPool = new List<GameObject>();
 
     [Serializable]
@@ -20,43 +23,55 @@ public class ObjectPooling : MonoBehaviour
 
     private void Awake()
     {
-
-        //pools[j] j kaç ise  o pool için sıradan çeker veya sıraya ekler??
-        for (int j = 0; j < pools.Length; j++)
         {
-            pools[j].pooledObjects = new Queue<GameObject>(); //Sırayı olusturduk
+            // If there is an instance, and it's not me, delete myself.
 
-            for (int i = 0; i < pools[j].poolCount; i++)
+            if (Instance != null && Instance != this)
             {
-                GameObject obj = Instantiate(pools[j].objectPrefab);
-                obj.SetActive(false);
-
-                pools[j].pooledObjects.Enqueue(obj);//obj'yi Enqueue ile sıraya soktuk
-                prefabsInPool.Add(obj);
+                Destroy(this);
             }
+            else
+            {
+                Instance = this;
+            }
+
+            //pools[j] j kaç ise  o pool için sıradan çeker veya sıraya ekler??
+            for (int j = 0; j < pools.Length; j++)
+            {
+                pools[j].pooledObjects = new Queue<GameObject>(); //Sırayı olusturduk
+
+                for (int i = 0; i < pools[j].poolCount; i++)
+                {
+                    GameObject obj = Instantiate(pools[j].objectPrefab);
+                    obj.SetActive(false);
+
+                    pools[j].pooledObjects.Enqueue(obj);//obj'yi Enqueue ile sıraya soktuk
+                    prefabsInPool.Add(obj);
+                }
+            }
+
+
+
+        }
         }
 
-
-
-    }
-
-    public GameObject GetPooledObject(int objectType)
-    {
-        if (objectType >= pools.Length)
+        public GameObject GetPooledObject(int objectType)
         {
-            return null;
+            if (objectType >= pools.Length)
+            {
+                return null;
+            }
+
+
+            GameObject obj = pools[objectType].pooledObjects.Dequeue(); //Sıranın basındaki elemani al ve çagır
+
+            obj.SetActive(true);
+
+            pools[objectType].pooledObjects.Enqueue(obj);//Sıranın basındaki objeyi aldıktan sonra tekrar sıraya soktuk
+
+
+
+            return obj;
         }
 
-
-        GameObject obj = pools[objectType].pooledObjects.Dequeue(); //Sıranın basındaki elemani al ve çagır
-
-        obj.SetActive(true);
-
-        pools[objectType].pooledObjects.Enqueue(obj);//Sıranın basındaki objeyi aldıktan sonra tekrar sıraya soktuk
-  
-
-
-        return obj;
     }
-
-}

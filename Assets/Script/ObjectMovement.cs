@@ -1,43 +1,72 @@
-﻿using DG.Tweening;
+﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
+using UnityEditorInternal;
+using Unity.VisualScripting;
+using Tayx.Graphy.Utils;
 
 public class ObjectMovement : MonoBehaviour
 {
+
     [SerializeField] private Transform _targetPos;
     [SerializeField] private float speed;
 
     private Transform[] returnPos;
+    public bool collectable = false;
 
     private void Start()
     {
+
         returnPos = ObjectsinPool.Instance.PrefabSpawnPos;
         _targetPos = GameObject.Find("PoolEnd").transform;
+
     }
+
     void FixedUpdate()
     {
         if (CharacterStart.Instance.swim)
         {
-            Vector3 a = transform.position;
-            Vector3 b = _targetPos.position;
-            b.y = transform.position.y;
-
-            transform.position = Vector3.MoveTowards(a, b, speed);
-
+            Vector3 targetPosition = new Vector3(_targetPos.position.x, transform.position.y, _targetPos.position.z);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.fixedDeltaTime);
         }
-
     }
+
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("poolEnd"))
+        if (ObjectPooling.Instance.prefabsInPool.Count == 0)
         {
-            Debug.Log("Değdi");
-            int randomIndex = Random.Range(0, returnPos.Length);
-            Vector3 ReturnSpawnPosition = new Vector3(returnPos[randomIndex].position.x, 0.35f, returnPos[randomIndex].position.z);
-            this.gameObject.transform.position = ReturnSpawnPosition;
-        }
+            if (other.gameObject.CompareTag("poolEnd"))
+            {
+                Debug.Log("Değdi");
 
+                int randomIndex = Random.Range(0, returnPos.Length);
+                Vector3 ReturnSpawnPosition = new Vector3(returnPos[randomIndex].position.x, -0.15f, returnPos[randomIndex].position.z);
+
+                StartCoroutine(Delay(ReturnSpawnPosition));
+            }
+
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("circle"))
+        {
+            collectable = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("circle"))
+        {
+            collectable = false;
+        }
+    }
+
+
+    IEnumerator Delay(Vector3 returnPos)
+    {
+        yield return new WaitForSeconds(0.5f);
+        this.gameObject.transform.position = returnPos;
     }
 }

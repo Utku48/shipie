@@ -17,12 +17,13 @@ public class CharacterStart : MonoBehaviour
     [SerializeField] private ParticleSystem _splash;
 
     [SerializeField] private AudioSource _source;
-  
+    [SerializeField] private AudioSource _source2;
+
 
     public bool swim = false;
     private void Awake()
     {
-
+        _source2.Play();
         if (Instance != null && Instance != this)
         {
             Destroy(this);
@@ -58,6 +59,7 @@ public class CharacterStart : MonoBehaviour
     IEnumerator StartParticule()
     {
         yield return new WaitForSeconds(0.5f);
+        _source2.Stop();
         _splash.Play();
         _source.Play();
 

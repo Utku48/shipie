@@ -8,7 +8,6 @@ public class ObjectsinPool : MonoBehaviour
 {
     public static ObjectsinPool Instance { get; private set; }
 
-    [SerializeField] private float spawnInterval = 1; //Ne kadar sıklıkla spawn edecegiz
 
     [SerializeField] private ObjectPooling objectPool = null;
 
@@ -32,27 +31,29 @@ public class ObjectsinPool : MonoBehaviour
     }
     void Start()
     {
-
         StartCoroutine(SpawnObjectsWithDelay());
+    }
+    void LateUpdate()
+    {
+
 
     }
-
     IEnumerator SpawnObjectsWithDelay()
     {
-        for (int i = 0; i < objectPool.prefabsInPool.Count; i++)
+        int temp = objectPool.prefabsInPool.Count;
+        for (int i = 0; i < temp; i++)
         {
+
             GameObject obj = objectPool.GetPooledObject(counter++ % 2); // ObjectPool scriptinden GetPooledObject'i çağır
+            Debug.Log(obj.name);
 
             int randomIndex = Random.Range(0, PrefabSpawnPos.Length);
-            Vector3 spawnPosition = new Vector3(PrefabSpawnPos[randomIndex].position.x, 0.35f, PrefabSpawnPos[randomIndex].position.z);
+            Vector3 spawnPosition = new Vector3(PrefabSpawnPos[randomIndex].position.x, -0.15f, PrefabSpawnPos[randomIndex].position.z);
 
-            // Eğer PrefabSpawnPos'da obj varsa 1 saniye bekle
-            if (PrefabSpawnPos[randomIndex].gameObject == obj)
-            {
-
-            }
 
             obj.transform.position = spawnPosition;
+            ObjectPooling.Instance.prefabsInPool.Remove(obj);
+
             yield return new WaitForSeconds(1.5f);
         }
     }
