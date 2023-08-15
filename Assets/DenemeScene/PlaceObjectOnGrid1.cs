@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlaceObjectOnGrid : MonoBehaviour
 {
     public Transform gridCellPrefab;
-    public Transform cube;
+    public Transform palet;
     public Transform onMousePrefab;
     public Vector3 smoothMousePosition;
     [SerializeField] private int height;
@@ -55,7 +55,9 @@ public class PlaceObjectOnGrid : MonoBehaviour
                         node.isPlacable = false; // Hücre artık dolu
                         onMousePrefab.GetComponent<ObjFollowMouse>().isOnGrid = true; // Fare üzerindeki nesneyi ızgara üzerine koy
 
-                        onMousePrefab.position = node.obj.position + new Vector3(0, 0.5f, 0); // Nesneyi hücrenin ortasına taşı
+                        onMousePrefab.position = node.obj.position + new Vector3(0, 0.1f, 0); // Nesneyi hücrenin ortasına taşı
+                        onMousePrefab.transform.localRotation = Quaternion.Euler(0f, 90f, 90f);
+
                         onMousePrefab.SetParent(node.obj);
                         onMousePrefab = null; // Fare üzerindeki nesneyi temizle
                     }
@@ -68,7 +70,7 @@ public class PlaceObjectOnGrid : MonoBehaviour
     {
         if (onMousePrefab == null) // Fare üzerinde nesne yoksa
         {
-            onMousePrefab = Instantiate(cube, mousePosition, Quaternion.identity); // Fare pozisyonunda yeni nesne oluştur
+            onMousePrefab = Instantiate(palet, mousePosition, Quaternion.identity); // Fare pozisyonunda yeni nesne oluştur
         }
     }
 
@@ -81,11 +83,11 @@ public class PlaceObjectOnGrid : MonoBehaviour
             for (int j = -height / 2; j < (height / 2) + 1; j++)
             {
 
-                Vector3 worldPosition = new Vector3(i, 0, j) * 3;
+                Vector3 worldPosition = new Vector3(i, 0, j) * 2;
 
                 Transform obj = Instantiate(gridCellPrefab, worldPosition, Quaternion.identity, GridParent); // Hücreyi oluştur
                 obj.name = "Cell" + name;
-                obj.localPosition = worldPosition;
+                obj.localPosition = new Vector3(worldPosition.x, worldPosition.y, (worldPosition.z - 1f));
                 nodes[i + 7, j + 7] = new Node(true, obj.position, obj); // Yeni hücre oluştur
                 name++;
                 Debug.Log(obj.gameObject.name);

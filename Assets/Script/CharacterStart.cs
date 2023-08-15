@@ -53,6 +53,25 @@ public class CharacterStart : MonoBehaviour
         if (other.gameObject.CompareTag("sea"))
         {
             StartCoroutine(StartParticule());
+
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("palet"))
+        {
+            this.gameObject.transform.position = new Vector3(transform.position.x, 0.12f, transform.position.z);
+            _anim.SetBool("isPalet", true);
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("palet"))
+        {
+            this.gameObject.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+            _anim.SetBool("isPalet", false);
+            //CharacterWalk.Instance.agent.enabled = true;
         }
     }
 

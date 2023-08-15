@@ -6,14 +6,11 @@ using Unity.VisualScripting;
 
 public class MoveCircle : MonoBehaviour
 {
+    [SerializeField] private GameObject character;
 
-
-    void Start()
+    private void Update()
     {
-
-        transform.DORotate(new Vector3(-90.0f, 360.0f, 0.0f), 2f).SetLoops(-1, LoopType.Restart);
+        transform.position = new Vector3(character.transform.position.x, transform.position.y, character.transform.position.z);
     }
-
-
 
 }
