@@ -53,7 +53,7 @@ public class CharacterStart : MonoBehaviour
         if (other.gameObject.CompareTag("sea"))
         {
             StartCoroutine(StartParticule());
-
+            
         }
     }
 
@@ -63,6 +63,8 @@ public class CharacterStart : MonoBehaviour
         {
             this.gameObject.transform.position = new Vector3(transform.position.x, 0.12f, transform.position.z);
             _anim.SetBool("isPalet", true);
+
+            swim = true;
         }
     }
     private void OnTriggerExit(Collider other)
@@ -71,7 +73,7 @@ public class CharacterStart : MonoBehaviour
         {
             this.gameObject.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
             _anim.SetBool("isPalet", false);
-            //CharacterWalk.Instance.agent.enabled = true;
+            swim = true;
         }
     }
 
