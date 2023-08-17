@@ -35,14 +35,14 @@ public class PlaceObjectOnGrid : MonoBehaviour
     void Update()
     {
         GetMousePositionOnGrid();
-        transform.position = new Vector3(character.transform.position.x, transform.position.y, character.transform.position.z);
+        transform.position = new Vector3(GridParent.transform.position.x, transform.position.y, GridParent.transform.position.z);
     }
 
     void GetMousePositionOnGrid()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (plane.Raycast(ray, out float enter)) ;
+        if (plane.Raycast(ray, out float enter))
         {
 
             mousePosition = ray.GetPoint(enter);
@@ -69,7 +69,8 @@ public class PlaceObjectOnGrid : MonoBehaviour
                                 onMousePrefab.GetComponent<ObjFollowMouse>().isOnGrid = true; // Fare üzerindeki nesneyi ızgara üzerine koy
 
                                 onMousePrefab.position = node.obj.position + new Vector3(0, 0.1f, 0); // Nesneyi hücrenin ortasına taşı
-                                onMousePrefab.transform.localRotation = Quaternion.Euler(0f, 90f, 90f);
+                                onMousePrefab.transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
+                                onMousePrefab.GetComponent<BoxCollider>().enabled = true;
 
                                 onMousePrefab.SetParent(node.obj);
                                 onMousePrefab = null; // Fare üzerindeki nesneyi temizle
@@ -89,6 +90,8 @@ public class PlaceObjectOnGrid : MonoBehaviour
         if (onMousePrefab == null) // Fare üzerinde nesne yoksa
         {
             onMousePrefab = Instantiate(palet, mousePosition, palet.transform.rotation); // Fare pozisyonunda yeni nesne oluştur
+
+            onMousePrefab.GetComponent<BoxCollider>().enabled = false;
         }
     }
 
