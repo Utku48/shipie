@@ -1,46 +1,53 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using Unity.Burst.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Experimental.AI;
 using UnityEngine.InputSystem.HID;
+using UnityEngine.UIElements;
 
 public class ClickToMove : MonoBehaviour
 {
+    public static ClickToMove Instance { get; private set; }
 
-    [SerializeField] private LayerMask Palet;
+    public NavMeshAgent agent;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+
+
+    }
+
     private void Update()
     {
 
 
-        if (Input.touchCount > 0)
+        if (Input.GetMouseButtonDown(0))
         {
-            Touch touch = Input.GetTouch(0); // İlk dokunma olayını al
-
-            if (touch.phase == TouchPhase.Began) // Dokunma başladığında
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Dokunulan yere bir ışın gönder
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                Ray ray = Camera.main.ScreenPointToRay(touch.position); // Dokunulan yere bir ışın gönder
+                agent.SetDestination(hit.point);
+                CharacterStart.Instance._anim.SetBool("isWalk", true);
 
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, Palet))
-                {
-                    if (hit.collider != null && hit.collider.CompareTag("palet"))
-                    {
-
-                        StartCoroutine(GoClickPos(hit));
-                    }
-                    else Debug.Log("palete dokun");
-                }
             }
         }
+        if (transform.position == agent.destination)
+        {
+            CharacterStart.Instance._anim.SetBool("isWalk", false);
 
+        }
     }
-
-    IEnumerator GoClickPos(RaycastHit hitTransform)
-    {
-        gameObject.transform.position = new Vector3(hitTransform.transform.position.x, transform.position.y, hitTransform.transform.position.z);
-
-        yield return new WaitForSeconds(5f);
-    }
-
 
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
+using UnityEngine.AI;
 
 public class CharacterStart : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class CharacterStart : MonoBehaviour
 
     [SerializeField] private Transform _fallPos;
     [SerializeField] private Transform _swimPos;
-    [SerializeField] private Animator _anim;
+    public Animator _anim;
 
     [SerializeField] private GameObject _circle;
     [SerializeField] private ParticleSystem _splash;
@@ -62,8 +63,10 @@ public class CharacterStart : MonoBehaviour
         if (other.gameObject.CompareTag("palet"))
         {
             this.gameObject.transform.position = new Vector3(transform.position.x, 0.12f, transform.position.z);
+
             _anim.SetBool("isPalet", true);
-            swim = true;
+            //ClickToMove.Instance.agent.enabled = true;
+            swim = false;
         }
     }
     private void OnTriggerExit(Collider other)
@@ -71,8 +74,9 @@ public class CharacterStart : MonoBehaviour
         if (other.gameObject.CompareTag("palet"))
         {
             this.gameObject.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-            _anim.SetBool("isPalet", false);
 
+            _anim.SetBool("isPalet", false);
+            //ClickToMove.Instance.agent.enabled = false;
             swim = true;
         }
     }

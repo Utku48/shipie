@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlaceObjectOnGrid : MonoBehaviour
 {
@@ -67,10 +68,15 @@ public class PlaceObjectOnGrid : MonoBehaviour
                             {
                                 node.isEmpty = false; // Hücre artık dolu
                                 onMousePrefab.GetComponent<ObjFollowMouse>().isOnGrid = true; // Fare üzerindeki nesneyi ızgara üzerine koy
-
                                 onMousePrefab.position = node.obj.position + new Vector3(0, 0.1f, 0); // Nesneyi hücrenin ortasına taşı
                                 onMousePrefab.transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
                                 onMousePrefab.GetComponent<BoxCollider>().enabled = true;
+
+
+                                ClickToMove.Instance.enabled = true;
+                                ClickToMove.Instance.agent.enabled = true;
+
+                                nodes[i, j].obj.transform.GetChild(0).gameObject.SetActive(false);
 
                                 onMousePrefab.SetParent(node.obj);
                                 onMousePrefab = null; // Fare üzerindeki nesneyi temizle
