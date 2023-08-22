@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
-    [SerializeField] private Transform[] restartPos;
     public LayerMask collectableLayer;
+
+    [SerializeField] private Transform[] restartPos;
+
+    [SerializeField] private ParticleSystem _coinParticule;
 
     private void Start()
     {
@@ -30,10 +33,15 @@ public class Collectable : MonoBehaviour
                     if (hit.collider != null && hit.collider.CompareTag("trash"))
                     {
                         ObjectMovement objectMovement = hit.collider.GetComponent<ObjectMovement>();
+
                         if (objectMovement != null && objectMovement.collectable == true)
                         {
+                            _coinParticule.transform.position = new Vector3(hit.transform.position.x, 0.5f, hit.transform.position.z);
+                            _coinParticule.Play();
+
                             int randomIndex = Random.Range(0, restartPos.Length);
                             Vector3 spawnPosition = new Vector3(restartPos[randomIndex].position.x, -0.15f, restartPos[randomIndex].position.z);
+                            ScoreManager.money += 10;
 
                             hit.collider.gameObject.SetActive(false);
                             objectMovement.collectable = false;

@@ -44,11 +44,11 @@ public class ObjectsinPool : MonoBehaviour
         for (int i = 0; i < temp; i++)
         {
 
-            GameObject obj = objectPool.GetPooledObject(counter++ % 2); // ObjectPool scriptinden GetPooledObject'i çağır
+            GameObject obj = objectPool.GetPooledObject(counter++ % 4); // ObjectPool scriptinden GetPooledObject'i çağır
             Debug.Log(obj.name);
 
             int randomIndex = Random.Range(0, PrefabSpawnPos.Length);
-            Vector3 spawnPosition = new Vector3(PrefabSpawnPos[randomIndex].position.x, -0.15f, PrefabSpawnPos[randomIndex].position.z);
+            Vector3 spawnPosition = new Vector3(PrefabSpawnPos[randomIndex].position.x, transform.position.y, PrefabSpawnPos[randomIndex].position.z);
 
 
             obj.transform.position = spawnPosition;

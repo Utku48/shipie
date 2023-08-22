@@ -7,9 +7,10 @@ public class ObjectMovement : MonoBehaviour
 
     [SerializeField] private Transform _targetPos;
     [SerializeField] private float speed;
-
+   
     private Transform[] returnPos;
     public bool collectable = false;
+
 
     private void Start()
     {

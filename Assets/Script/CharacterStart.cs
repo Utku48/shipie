@@ -65,7 +65,7 @@ public class CharacterStart : MonoBehaviour
             this.gameObject.transform.position = new Vector3(transform.position.x, 0.12f, transform.position.z);
 
             _anim.SetBool("isPalet", true);
-            //ClickToMove.Instance.agent.enabled = true;
+
             swim = false;
         }
     }
@@ -76,7 +76,7 @@ public class CharacterStart : MonoBehaviour
             this.gameObject.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
             _anim.SetBool("isPalet", false);
-            //ClickToMove.Instance.agent.enabled = false;
+
             swim = true;
         }
     }
