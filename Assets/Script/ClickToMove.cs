@@ -1,18 +1,14 @@
-﻿using DG.Tweening;
-using System.Collections;
-using Unity.Burst.CompilerServices;
-using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Experimental.AI;
-using UnityEngine.InputSystem.HID;
-using UnityEngine.UIElements;
+
 
 public class ClickToMove : MonoBehaviour
 {
     public static ClickToMove Instance { get; private set; }
 
     public NavMeshAgent agent;
+
+    [SerializeField] public LayerMask Palett;
 
     private void Awake()
     {
@@ -36,18 +32,21 @@ public class ClickToMove : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Dokunulan yere bir ışın gönder
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, Palett))
             {
                 agent.SetDestination(hit.point);
                 CharacterStart.Instance._anim.SetBool("isWalk", true);
 
+                float distance = Vector3.Distance(transform.position, hit.point);
+                Debug.Log("HİTPOSS:" + hit.point);
+                if (distance <= 1.5f)
+                {
+                    CharacterStart.Instance._anim.SetBool("isWalk", false);
+                }
+
             }
         }
-        if (transform.position == agent.destination)
-        {
-            CharacterStart.Instance._anim.SetBool("isWalk", false);
 
-        }
     }
 
 }

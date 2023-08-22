@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEditorInternal;
-using Unity.VisualScripting;
-using Tayx.Graphy.Utils;
+
 
 public class ObjectMovement : MonoBehaviour
 {
@@ -17,17 +15,16 @@ public class ObjectMovement : MonoBehaviour
     {
 
         returnPos = ObjectsinPool.Instance.PrefabSpawnPos;
-        _targetPos = GameObject.Find("PoolEnd").transform;
+        _targetPos = GameObject.Find("PoolObjectsTarget").transform;
 
     }
 
     void FixedUpdate()
     {
-        if (CharacterStart.Instance.swim)
-        {
-            Vector3 targetPosition = new Vector3(_targetPos.position.x, transform.position.y, _targetPos.position.z);
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.fixedDeltaTime);
-        }
+
+        Vector3 targetPosition = new Vector3(_targetPos.position.x, transform.position.y, _targetPos.position.z);
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.fixedDeltaTime);
+
     }
 
 

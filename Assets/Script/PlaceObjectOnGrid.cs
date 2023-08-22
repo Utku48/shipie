@@ -1,7 +1,6 @@
 ﻿using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -21,6 +20,7 @@ public class PlaceObjectOnGrid : MonoBehaviour
 
     [SerializeField] private GameObject character;
     [SerializeField] private Transform GridParent;
+    [SerializeField] private Transform Plane;
 
     private void Awake()
     {
@@ -36,7 +36,7 @@ public class PlaceObjectOnGrid : MonoBehaviour
     void Update()
     {
         GetMousePositionOnGrid();
-        transform.position = new Vector3(GridParent.transform.position.x, transform.position.y, GridParent.transform.position.z);
+        transform.position = new Vector3(Plane.transform.position.x, transform.position.y, Plane.transform.position.z);
     }
 
     void GetMousePositionOnGrid()
@@ -138,14 +138,26 @@ public class PlaceObjectOnGrid : MonoBehaviour
 
     public bool IsGridPlacable(int i, int j)
     {
-        if ((i == 7 && j == 7) || (nodes[i + 1, j].isEmpty == false || nodes[i - 1, j].isEmpty == false || nodes[i, j + 1].isEmpty == false || nodes[i, j - 1].isEmpty == false))
+        int numRows = nodes.GetLength(0);
+        int numCols = nodes.GetLength(1);
+
+        if (i < 0 || i >= numRows || j < 0 || j >= numCols)
+        {
+            // Geçersiz indeksler, yerleştirme mümkün değil.
+            return false;
+        }
+
+        if ((i == 7 && j == 7) ||
+            (i < numRows - 1 && !nodes[i + 1, j].isEmpty) ||
+            (i > 0 && !nodes[i - 1, j].isEmpty) ||
+            (j < numCols - 1 && !nodes[i, j + 1].isEmpty) ||
+            (j > 0 && !nodes[i, j - 1].isEmpty))
         {
             return true;
         }
+
         return false;
     }
-
-
 
 }
 

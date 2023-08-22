@@ -128,5 +128,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _targetPos: {fileID: 0}
-  speed: 0.5
+  speed: 1.5
   collectable: 0
