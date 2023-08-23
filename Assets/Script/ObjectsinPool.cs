@@ -45,7 +45,7 @@ public class ObjectsinPool : MonoBehaviour
         {
 
             GameObject obj = objectPool.GetPooledObject(counter++ % 4); // ObjectPool scriptinden GetPooledObject'i çağır
-            Debug.Log(obj.name);
+      
 
             int randomIndex = Random.Range(0, PrefabSpawnPos.Length);
             Vector3 spawnPosition = new Vector3(PrefabSpawnPos[randomIndex].position.x, transform.position.y, PrefabSpawnPos[randomIndex].position.z);
