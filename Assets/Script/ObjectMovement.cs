@@ -38,7 +38,7 @@ public class ObjectMovement : MonoBehaviour
                 Debug.Log("Değdi");
 
                 int randomIndex = Random.Range(0, returnPos.Length);
-                Vector3 ReturnSpawnPosition = new Vector3(returnPos[randomIndex].position.x, -0.15f, returnPos[randomIndex].position.z);
+                Vector3 ReturnSpawnPosition = new Vector3(returnPos[randomIndex].position.x, 0.4f, returnPos[randomIndex].position.z);
 
                 StartCoroutine(Delay(ReturnSpawnPosition));
             }
