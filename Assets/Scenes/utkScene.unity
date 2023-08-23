@@ -925,7 +925,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 478461721}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.2104168, y: 3.280002, z: 19.7}
+  m_LocalPosition: {x: -0.2104168, y: 3.280002, z: 13.97}
   m_LocalScale: {x: 0.5134601, y: 0.51346004, z: 0.51346004}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1910,7 +1910,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 922832591}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.62, z: -2.2}
+  m_LocalPosition: {x: -13.3, y: 1.62, z: -2.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2089,7 +2089,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1051108966}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 97.84925, y: 2.1079044, z: 1}
@@ -3554,16 +3554,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabsInPool: []
   pools:
-  - objectPrefab: {fileID: 4569182486065011512, guid: 52569f41c1fd7460ea58cd8a8ab7a16d,
+  - objectPrefab: {fileID: 7287710206964970373, guid: d83e1d5421e181f40a8c8a78cf36ecac,
       type: 3}
     poolCount: 3
-  - objectPrefab: {fileID: 5881477221338216993, guid: 6ab02593b4f8c4fe798d90a362cf497c,
+  - objectPrefab: {fileID: 410712825656222886, guid: 8d4385a0912f1884fb881f538a73a9ff,
       type: 3}
     poolCount: 3
-  - objectPrefab: {fileID: 6047675016743723098, guid: 7c7d2a3c3db8c4c51a3b047827c130f6,
+  - objectPrefab: {fileID: 3705941390720006712, guid: 9d1d3ac713b4e9e4481066a0357c3240,
       type: 3}
     poolCount: 3
-  - objectPrefab: {fileID: 6479058932632462645, guid: 6e3b8e7984d1342dc81fc60609984b4c,
+  - objectPrefab: {fileID: 6009719567655656350, guid: 4227662d623e7fc4292b568bb9872eee,
+      type: 3}
+    poolCount: 3
+  - objectPrefab: {fileID: 3097840747089762753, guid: a1ffa13b14f73ed4d8826187e18bb080,
       type: 3}
     poolCount: 3
 --- !u!114 &2052190247
