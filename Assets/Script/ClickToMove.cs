@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 using UnityEngine.AI;
 
 
@@ -9,6 +10,7 @@ public class ClickToMove : MonoBehaviour
     public NavMeshAgent agent;
 
     [SerializeField] public LayerMask Palett;
+    [SerializeField] public Transform character;
 
     private void Awake()
     {
@@ -26,8 +28,6 @@ public class ClickToMove : MonoBehaviour
 
     private void Update()
     {
-
-
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Dokunulan yere bir ışın gönder
@@ -36,9 +36,8 @@ public class ClickToMove : MonoBehaviour
             {
                 agent.SetDestination(hit.point);
                 CharacterStart.Instance._anim.SetBool("isWalk", true);
-
                 float distance = Vector3.Distance(transform.position, hit.point);
-                Debug.Log("HİTPOSS:" + hit.point);
+
                 if (distance <= 1.5f)
                 {
                     CharacterStart.Instance._anim.SetBool("isWalk", false);
