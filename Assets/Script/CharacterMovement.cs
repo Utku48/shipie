@@ -7,8 +7,6 @@ using static UnityEngine.GraphicsBuffer;
 
 public class CharacterMovement : MonoBehaviour
 {
-
-
     [SerializeField] private Transform _targetPos;
     [SerializeField] private float speed;
     [SerializeField] private Transform _plane;
@@ -26,7 +24,6 @@ public class CharacterMovement : MonoBehaviour
             transform.DOLookAt(b, 1f)
              .SetEase(Ease.Linear);
         }
-
     }
 
 }

@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 46435768}
   - component: {fileID: 46435767}
   - component: {fileID: 46435769}
+  - component: {fileID: 46435770}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -237,6 +238,21 @@ MonoBehaviour:
   m_VoxelSize: 0.033333335
   m_BuildHeightMesh: 0
   m_NavMeshData: {fileID: 23800000, guid: dbc3101724b31b549b983bb56bf9cc94, type: 2}
+--- !u!114 &46435770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46435764}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b86409dec3d464799fdebadedac9a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetPos: {fileID: 922832592}
+  movementSpeed: 0.025
+  character: {fileID: 1343502031}
 --- !u!198 &95357616 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 1349840411600776653, guid: 62b7403b97e2e024a9a3395f1353f727,
@@ -2521,7 +2537,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1343502024}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c0ffee8d25db2614eb04532eb0eb02fb, type: 3}
   m_Name: 
@@ -2583,6 +2599,7 @@ MonoBehaviour:
   Palett:
     serializedVersion: 2
     m_Bits: 1024
+  character: {fileID: 1343502024}
 --- !u!1 &1400399868
 GameObject:
   m_ObjectHideFlags: 0

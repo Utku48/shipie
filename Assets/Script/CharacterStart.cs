@@ -21,7 +21,7 @@ public class CharacterStart : MonoBehaviour
     [SerializeField] private AudioSource _source2;
 
 
-    public bool swim = false;
+    public bool swim;
     private void Awake()
     {
         _source2.Play();
