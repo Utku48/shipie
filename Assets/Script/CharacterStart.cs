@@ -62,7 +62,7 @@ public class CharacterStart : MonoBehaviour
     {
         if (other.gameObject.CompareTag("palet"))
         {
-            this.gameObject.transform.position = new Vector3(transform.position.x, 0.12f, transform.position.z);
+            this.gameObject.transform.position = new Vector3(transform.position.x, 0.5298f, transform.position.z);
 
             _anim.SetBool("isPalet", true);
 

@@ -1,13 +1,14 @@
 ﻿using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class PlaceObjectOnGrid : MonoBehaviour
 {
     public Transform gridCellPrefab;
-    public Transform palet;
+    public Transform[] Palets;
     public Transform onMousePrefab;
     public Vector3 smoothMousePosition;
     [SerializeField] private int height;
@@ -16,6 +17,7 @@ public class PlaceObjectOnGrid : MonoBehaviour
     private Vector3 mousePosition;
     Node[,] nodes;
     private Plane plane;
+    public int id;
 
 
     [SerializeField] private GameObject character;
@@ -67,9 +69,23 @@ public class PlaceObjectOnGrid : MonoBehaviour
                             if (Input.GetMouseButtonUp(0) && onMousePrefab != null) // Sol tıklama algılandı mı ve fare üzerinde nesne var mı?
                             {
                                 node.isEmpty = false; // Hücre artık dolu
+
                                 onMousePrefab.GetComponent<ObjFollowMouse>().isOnGrid = true; // Fare üzerindeki nesneyi ızgara üzerine koy
                                 onMousePrefab.position = node.obj.position + new Vector3(0, 0.1f, 0); // Nesneyi hücrenin ortasına taşı
-                                onMousePrefab.transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
+
+
+                                if (id == 1 || id == 2 || id == 3)
+                                {
+                                    int[] RotY = { 0, 90, 180, 270 };
+                                    var choose = Random.Range(0, RotY.Length);
+
+                                    onMousePrefab.transform.localRotation = Quaternion.Euler(0f, RotY[choose], 90f);
+
+                                }
+                                else
+                                {
+                                    onMousePrefab.transform.localRotation = Quaternion.Euler(0f, 90f, 90f);
+                                }
                                 onMousePrefab.GetComponent<BoxCollider>().enabled = true;
 
 
@@ -91,15 +107,38 @@ public class PlaceObjectOnGrid : MonoBehaviour
         }
     }
 
-    public void OnMouseClickOnUı()
+    public void OnMouseClickOnUı(int prefabIndex)
     {
-        if (onMousePrefab == null) // Fare üzerinde nesne yoksa
+        if (onMousePrefab == null)
         {
-            onMousePrefab = Instantiate(palet, mousePosition, palet.transform.rotation); // Fare pozisyonunda yeni nesne oluştur
-
+            onMousePrefab = Instantiate(Palets[prefabIndex], mousePosition, Palets[prefabIndex].transform.rotation);
+            id = prefabIndex;
             onMousePrefab.GetComponent<BoxCollider>().enabled = false;
+            ClickToMove.Instance.agent.enabled = false;
         }
     }
+
+    public void OnPaleteClick()
+    {
+        OnMouseClickOnUı(0);
+
+    }
+    public void OnTopClick()
+    {
+        OnMouseClickOnUı(1);
+
+    }
+    public void OnYelkenliClick()
+    {
+        OnMouseClickOnUı(2);
+
+    }
+    public void OnHookClick()
+    {
+        OnMouseClickOnUı(3);
+
+    }
+
 
     private void CreateGrid()
     {
