@@ -71,7 +71,7 @@ public class PlaceObjectOnGrid : MonoBehaviour
                                 node.isEmpty = false; // Hücre artık dolu
 
                                 onMousePrefab.GetComponent<ObjFollowMouse>().isOnGrid = true; // Fare üzerindeki nesneyi ızgara üzerine koy
-                                onMousePrefab.position = node.obj.position + new Vector3(0, 0.1f, 0); // Nesneyi hücrenin ortasına taşı
+                                onMousePrefab.position = node.obj.position + new Vector3(0, -0.1f, 0); // Nesneyi hücrenin ortasına taşı
 
 
                                 if (id == 1 || id == 2 || id == 3)
@@ -87,7 +87,7 @@ public class PlaceObjectOnGrid : MonoBehaviour
                                     onMousePrefab.transform.localRotation = Quaternion.Euler(0f, 90f, 90f);
                                 }
                                 onMousePrefab.GetComponent<BoxCollider>().enabled = true;
-
+                                character.GetComponent<BoxCollider>().isTrigger = true;
 
                                 ClickToMove.Instance.enabled = true;
                                 ClickToMove.Instance.agent.enabled = true;
@@ -114,6 +114,7 @@ public class PlaceObjectOnGrid : MonoBehaviour
             onMousePrefab = Instantiate(Palets[prefabIndex], mousePosition, Palets[prefabIndex].transform.rotation);
             id = prefabIndex;
             onMousePrefab.GetComponent<BoxCollider>().enabled = false;
+
             ClickToMove.Instance.agent.enabled = false;
         }
     }
