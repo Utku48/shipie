@@ -49,7 +49,10 @@ public class CharacterStart : MonoBehaviour
         });
 
     }
-    private void OnTriggerEnter(Collider other)
+
+
+
+    private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("sea"))
         {
@@ -73,7 +76,8 @@ public class CharacterStart : MonoBehaviour
     {
         if (other.gameObject.CompareTag("palet"))
         {
-            this.gameObject.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+            Debug.Log("çıktı");
+            this.gameObject.transform.position = new Vector3(transform.position.x, _swimPos.transform.position.y, transform.position.z);
 
             _anim.SetBool("isPalet", false);
 
